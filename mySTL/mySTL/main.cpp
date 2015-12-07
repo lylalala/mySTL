@@ -6,10 +6,14 @@
 //  Copyright © 2015年 ly. All rights reserved.
 //
 
+#include "myalloc.h"
+#include <vector>
 #include <iostream>
-
-int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
+using namespace std;
+int main(){
+    int ia[5]={1,2,3,4,5};
+    vector<int,JJ::allocator<int>> iv(ia,ia+5);
+    for(int i=0;i<iv.size();i++)
+        cout<<iv.at(i)<<endl;
     return 0;
 }
