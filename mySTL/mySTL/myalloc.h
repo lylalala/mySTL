@@ -6,6 +6,11 @@
 //  Copyright © 2015年 ly. All rights reserved.
 //
 
+//第一版本：实现简单的alloc，里面包含分配，释放，构造，析构，并可以配合简版的vector使用
+//第二版本：实现完整的第一级适配器，并可以配合简单的vector使用
+//第三版本：
+
+
 /*#ifdef _USE_COMPLEX_MALLO
     typedef _malloc_alloc_template<0> malloc_alloc;
     typedef malloc_alloc alloc;
@@ -16,16 +21,15 @@
 #ifndef myalloc_h
 #define myalloc_h
 #include<new>
-#include<cstddef>
-#include<cstdlib>
-#include<climits>
 #include<iostream>
 
 namespace JJ {
     using namespace std;
-    //具备次配置能力的空间配置器
-
+#define simpleAlloc
     
+    
+    /*
+    //1.
     template<class T>
     inline T* _allocate(ptrdiff_t size,T*){
         std::set_new_handler(0);
@@ -37,11 +41,13 @@ namespace JJ {
         return tmp;
     }
     
+    //1.
     template<class T>
     inline void _deallocate(T* buffer){
         ::operator delete(buffer);
     }
     
+    //1.第一版本的构造析构函数，第二版本移至myconstruct.h中
     //构造和析构使用简单的new和本身的析构，暂不支持对迭代器的析构
     template<class T1,class T2>
     inline void _construct(T1* p,const T2 & value){
@@ -53,7 +59,8 @@ namespace JJ {
         ptr->~T();
     }
     
-    template<class T>
+    //template<class T>
+    template<int inis>
     class allocator{
     public:
         typedef T value_type;
@@ -74,11 +81,18 @@ namespace JJ {
             cout<<"allocate"<<endl;
         }
         
+        //1.第一版的deallocate
         void deallocate(pointer p,const T& value){
             _deallocate(p);
             cout<<"deallocate"<<endl;
         }
         
+        void dealocate(pointer p,size_type n){
+            free(p);
+            cout<<"deallocate"<<endl;
+        }
+        
+        //1.第一版的构造和析构函数
         void construct(pointer p,const T& value){
             _construct(p,value);
             cout<<"construct"<<endl;
@@ -105,16 +119,16 @@ namespace JJ {
             return std::max(size_type(1),size_type(4096/sizeof(T)));
             cout<<"init_page_size"<<endl;
         }
-    };
+    };*/
     
-    /*
     //包装的接口
     template<class T,class Alloc>
     class simple_alloc{
     public:
         
         static T *allocate(size_t n){
-            return (n==0)?NULL:(Alloc::allocate(n*sizeof(T)));
+            void* result=(n==0)?NULL:(Alloc::allocate(n*sizeof(T)));
+            return (T*)result;
         }
         static T *allocate(){
             return Alloc::allocate(sizeof(T));
@@ -128,7 +142,6 @@ namespace JJ {
         }
     };
     
-    //简单的配置器：第一层配置器，不考虑内存不足的情况
     template<int inst>
     class _malloc_alloc_template{
     public:
@@ -143,7 +156,19 @@ namespace JJ {
             void* result=realloc(p, new_sz);
             return result;
         }
-    };*/
+    };
+    
+    template<int inst>
+    class _default_alloc_template{
+        
+    };
+    
+#ifdef simpleAlloc
+    typedef _malloc_alloc_template<0> malloc_alloc;
+#else
+    typedef _default_alloc_template<0> malloc_alloc;
+#endif
+    
 }
 
 #endif /* myalloc_h */
