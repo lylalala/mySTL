@@ -27,7 +27,7 @@ int main(){
     cout<<"return"<<endl;*/
     
     //调试myvector
-    myvector<int> iv(3,1);
+    myvector<int> iv(100,1);
     for (int i=0; i<iv.size(); i++) {
         cout<<iv[i]<<endl;
     }
