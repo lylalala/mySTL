@@ -27,9 +27,31 @@ int main(){
     cout<<"return"<<endl;*/
     
     //调试myvector
-    myvector<int> iv(100,1);
+    myvector<int> iv(2,1);
+    iv.push_back(2);
     for (int i=0; i<iv.size(); i++) {
-        cout<<iv[i]<<endl;
+        cout<<iv[i]<<" ";
     }
+    cout<<endl;
+    iv.insert(iv.begin(), 4);
+    for (int i=0; i<iv.size(); i++) {
+        cout<<iv[i]<<" ";
+    }
+    cout<<endl;
+    iv.insert(iv.begin()+2, 5);
+    for (int i=0; i<iv.size(); i++) {
+        cout<<iv[i]<<" ";
+    }
+    cout<<endl;
+    iv.erase(iv.begin(), iv.begin()+2);
+    for (int i=0; i<iv.size(); i++) {
+        cout<<iv[i]<<" ";
+    }
+    cout<<endl;
+    iv.erase(iv.begin());
+    for (int i=0; i<iv.size(); i++) {
+        cout<<iv[i]<<" ";
+    }
+    cout<<endl;
     return 0;
 }

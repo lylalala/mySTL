@@ -14,6 +14,7 @@
 #include "myalloc.h"
 #include <new>
 #include "myconstruct.h"
+#include "myuninitialized.h"
 using namespace std;
 
 //template <class T,class Alloc=JJ::allocator<T> >
@@ -69,7 +70,7 @@ public://构造函数和析构函数
 */
 public:
     myvector():start(NULL),finish(NULL),end_of_storage(NULL){};
-    myvector(size_type n,value_type value=0){
+    myvector(size_type n,value_type value){
         start=data_allocate::allocate(n);
         finish=end_of_storage=start+n;
         for (iterator i=start; i!=finish; i++) {
@@ -108,6 +109,66 @@ public:
     reference operator[](size_type n){return *(start+n);}
     reference front(){return *start;}
     reference back(){return *(finish-1);}
+    
+public:
+    void push_back(const T& value){
+        if(finish==end_of_storage){
+            insert(finish,value);
+        }else{
+            JJ::construct(finish, value);
+            finish++;
+        }
+    }
+    
+    void insert(iterator postion,const T& value){
+        if(finish==end_of_storage){//need to apply for new room
+            //bring the data to a new palce
+            const size_type length=finish-start;
+            const size_type newlength=(length==0)?1:2*length;
+            iterator newstart=data_allocate::allocate(newlength);
+            iterator newfinish;
+            iterator newend_of_storage=newstart+newlength;
+            newfinish=JJ::uninitialized_copy(start, postion, newstart);
+            JJ::construct(newfinish++, value);
+            newfinish=JJ::uninitialized_copy(postion, end_of_storage, newfinish);
+            
+            //deallocate the old place
+            /*for (iterator i=start; i!=finish; i++) {
+                JJ::destroy(i);
+            }
+            data_allocate::deallocate(start);*/
+            this->~myvector();//可以这样析构自己吗？
+            start=newstart;
+            finish=newfinish;
+            end_of_storage=newend_of_storage;
+        }else{
+            finish=JJ::uninitialized_copy_back(postion,finish, postion+1);
+            JJ::construct(postion, value);
+        }
+    }
+    
+    void pop_back(){
+        if (start==finish) {
+            std::cerr<<"There is no object in this vector"<<endl;
+            exit(0);
+        }
+        finish--;
+        JJ::destroy(finish);
+    }
+    
+    iterator erase(iterator first,iterator last){
+        iterator newend=JJ::uninitialized_copy(last, finish, first);
+        for (iterator i=newend; i!=finish; i++) {
+            JJ::destroy(i);
+        }
+        finish=newend;
+        return first;
+    }
+    
+    iterator erase(iterator position){
+        this->erase(position,position+1);
+        return position;
+    }
 };
 
 #endif /* myvector_hpp */

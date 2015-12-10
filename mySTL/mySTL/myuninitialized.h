@@ -18,6 +18,18 @@ namespace JJ{
         for (; i!=last; i++,j++) {
             construct(j,*i);
         }
+        return j;
+    }
+    
+    template<class inputIterator,class outputIterator>
+    outputIterator uninitialized_copy_back(inputIterator first,inputIterator last,outputIterator result){
+        const size_t length=last-first;
+        outputIterator res=result+length;
+        inputIterator i=last-1;
+        for (res--;i>=first; i--,res--) {
+            construct(res, *i);
+        }
+        return result+length;
     }
     
     template<class outIterator,class T>
