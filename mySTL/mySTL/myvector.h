@@ -70,7 +70,7 @@ public://构造函数和析构函数
 */
 public:
     myvector():start(NULL),finish(NULL),end_of_storage(NULL){};
-    myvector(size_type n,value_type value){
+    myvector(const size_type n,const_reference value){
         start=data_allocate::allocate(n);
         finish=end_of_storage=start+n;
         for (iterator i=start; i!=finish; i++) {
@@ -120,31 +120,26 @@ public:
         }
     }
     
-    void insert(iterator postion,const T& value){
-        if(finish==end_of_storage){//need to apply for new room
+    void insert(iterator position,const_reference value){
+        /*if(finish==end_of_storage){//need to apply for new room
             //bring the data to a new palce
             const size_type length=finish-start;
             const size_type newlength=(length==0)?1:2*length;
             iterator newstart=data_allocate::allocate(newlength);
             iterator newfinish;
             iterator newend_of_storage=newstart+newlength;
-            newfinish=JJ::uninitialized_copy(start, postion, newstart);
+            newfinish=JJ::uninitialized_copy(start, position, newstart);
             JJ::construct(newfinish++, value);
-            newfinish=JJ::uninitialized_copy(postion, end_of_storage, newfinish);
-            
-            //deallocate the old place
-            /*for (iterator i=start; i!=finish; i++) {
-                JJ::destroy(i);
-            }
-            data_allocate::deallocate(start);*/
+            newfinish=JJ::uninitialized_copy(position, end_of_storage, newfinish);
             this->~myvector();//可以这样析构自己吗？
             start=newstart;
             finish=newfinish;
             end_of_storage=newend_of_storage;
         }else{
-            finish=JJ::uninitialized_copy_back(postion,finish, postion+1);
-            JJ::construct(postion, value);
-        }
+            finish=JJ::uninitialized_copy_back(position,finish, position+1);
+            JJ::construct(position, value);
+        }*/
+        insert(position, 1,value);
     }
     
     void pop_back(){
@@ -168,6 +163,66 @@ public:
     iterator erase(iterator position){
         this->erase(position,position+1);
         return position;
+    }
+    
+    
+    //厂哥建议补充部分
+public:
+    template<typename InputIterator>
+    myvector(InputIterator first, InputIterator second){
+        const size_type length=second-first;
+        start=data_allocate::allocate(length);
+        finish=end_of_storage=start+length;
+        iterator j=start;
+        for (InputIterator i=first; i!=second; i++,j++) {
+            JJ::construct(j, *i);
+        }
+    }
+    
+    /*myvector<T>& operator=(std::initializer_list<T> arr){
+        const size_type length=arr.begin()-arr.end();
+        start=data_allocate::allocate(length);
+        finish=end_of_storage=start+length;
+        iterator j=start;
+        JJ::uninitialized_copy(arr.begin(),arr.end(),start);
+    }*/
+    
+    //template<typename InputIterator>
+    void insert(iterator position,size_type n,const_reference value){
+        if(finish+n>=end_of_storage){//need to apply for new room
+            //bring the data to a new palce
+            const size_type length=finish-start;
+            size_type newlength=(length==0)?1:2*length;
+            newlength=(newlength>length+2*n)?newlength:length+2*n;
+            iterator newstart=data_allocate::allocate(newlength);
+            iterator newfinish;
+            iterator newend_of_storage=newstart+newlength;
+            newfinish=JJ::uninitialized_copy(start, position, newstart);
+            //iterator i=position;
+            while (n>0) {
+                JJ::construct(newfinish++, value);
+                n--;
+            }
+            //JJ::construct(newfinish++, value);
+            newfinish=JJ::uninitialized_copy(position, end_of_storage, newfinish);
+            
+            //deallocate the old place
+            /*for (iterator i=start; i!=finish; i++) {
+             JJ::destroy(i);
+             }
+             data_allocate::deallocate(start);*/
+            this->~myvector();//可以这样析构自己吗？
+            start=newstart;
+            finish=newfinish;
+            end_of_storage=newend_of_storage;
+        }else{
+            finish=JJ::uninitialized_copy_back(position,finish, position+n);
+            iterator i=position;
+            while (n>0) {
+                JJ::construct(i++, value);
+                n--;
+            }
+        }
     }
 };
 

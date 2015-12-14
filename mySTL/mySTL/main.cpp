@@ -26,8 +26,8 @@ int main(){
     cout<<*ptr<<endl;
     cout<<"return"<<endl;*/
     
-    //调试myvector
-    myvector<int> iv(2,1);
+    //调试myvector<int>
+    /*myvector<int> iv(2,1);
     iv.push_back(2);
     for (int i=0; i<iv.size(); i++) {
         cout<<iv[i]<<" ";
@@ -51,6 +51,32 @@ int main(){
     iv.erase(iv.begin());
     for (int i=0; i<iv.size(); i++) {
         cout<<iv[i]<<" ";
+    }
+    cout<<endl;*/
+    
+    //调试myvector<struct>
+    /*struct yg{
+        int first;
+        string second;
+    };
+    yg object;
+    object.first=3;
+    object.second="hello";
+    myvector<yg> iv(3,object);
+    for (int i=0; i<iv.size(); i++) {
+        cout<<iv[i].first<<" "<<iv[i].second<<" "<<endl;
+    }*/
+    
+    int a[]={1,2,3};
+    myvector<int> aa={1,2,3};
+    for (int i=0; i<aa.size(); i++) {
+        cout<<aa[i]<<" ";
+    }
+    cout<<endl;
+    //aa.insert(aa.begin(),2,100);
+    aa.insert(aa.begin(), 2, 100);
+    for (int i=0; i<aa.size(); i++) {
+        cout<<aa[i]<<" ";
     }
     cout<<endl;
     return 0;

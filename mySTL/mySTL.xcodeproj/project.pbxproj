@@ -23,6 +23,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0885652B1C1E9F5C00E493B2 /* myRBtree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = myRBtree.h; path = mySTL/myRBtree.h; sourceTree = "<group>"; };
 		088CFEE51C15387D0041354D /* mySTL */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = mySTL; sourceTree = BUILT_PRODUCTS_DIR; };
 		088CFEE81C15387D0041354D /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		088CFEEF1C156A700041354D /* myalloc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = myalloc.h; path = mySTL/myalloc.h; sourceTree = "<group>"; };
@@ -81,6 +82,7 @@
 		088CFEF11C166DA40041354D /* containers */ = {
 			isa = PBXGroup;
 			children = (
+				0885652B1C1E9F5C00E493B2 /* myRBtree.h */,
 				088CFEF71C169F6B0041354D /* myvector.h */,
 			);
 			name = containers;
@@ -261,6 +263,7 @@
 				088CFEEE1C15387D0041354D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
