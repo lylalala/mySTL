@@ -10,6 +10,7 @@
 #include <vector>
 #include <iostream>
 #include "myvector.h"
+#include "myRBtree.h"
 using namespace std;
 int main(){
     //调试myalloc.h
@@ -68,7 +69,7 @@ int main(){
     }*/
     
     int a[]={1,2,3};
-    myvector<int> aa={1,2,3};
+    myvector<int> aa={a,a+3};
     for (int i=0; i<aa.size(); i++) {
         cout<<aa[i]<<" ";
     }
