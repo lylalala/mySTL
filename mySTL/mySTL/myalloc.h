@@ -131,7 +131,8 @@ namespace JJ {
             return (T*)result;
         }
         static T *allocate(){
-            return Alloc::allocate(sizeof(T));
+            void* result=Alloc::allocate(sizeof(T));
+            return (T*)result;
         }
         static void deallocate(T* p,size_t n){
             if(n!=0)

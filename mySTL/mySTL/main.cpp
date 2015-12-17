@@ -68,7 +68,8 @@ int main(){
         cout<<iv[i].first<<" "<<iv[i].second<<" "<<endl;
     }*/
     
-    int a[]={1,2,3};
+    //more function of vector
+    /*int a[]={1,2,3};
     myvector<int> aa={a,a+3};
     for (int i=0; i<aa.size(); i++) {
         cout<<aa[i]<<" ";
@@ -78,6 +79,25 @@ int main(){
     aa.insert(aa.begin(), 2, 100);
     for (int i=0; i<aa.size(); i++) {
         cout<<aa[i]<<" ";
+    }
+    cout<<endl;*/
+//---------------------------------------------------------------------------------------
+    //test of myRBtree
+    myrb_tree<int, int, JJ::identity<int>, less<int>> itree;
+    cout<<itree.size()<<endl;
+    itree.insert_unique(10);
+    itree.insert_unique(7);
+    itree.insert_unique(8);
+    itree.insert_unique(15);
+    itree.insert_unique(5);
+    itree.insert_unique(6);
+    itree.insert_unique(11);
+    itree.insert_unique(13);
+    itree.insert_unique(12);
+    cout<<itree.size()<<endl;
+    int a=0;
+    for (myrb_tree<int, int, JJ::identity<int>, less<int>>::iterator it=itree.begin(); a<9/*it!=itree.end()*/; it++,a++) {
+        cout<<*it<<" ";
     }
     cout<<endl;
     return 0;
