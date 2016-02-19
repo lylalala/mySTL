@@ -30,6 +30,7 @@
 		088CFEF71C169F6B0041354D /* myvector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = myvector.h; path = mySTL/myvector.h; sourceTree = "<group>"; };
 		088CFEF91C17DF7B0041354D /* myconstruct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = myconstruct.h; path = mySTL/myconstruct.h; sourceTree = "<group>"; };
 		088CFEFA1C1920310041354D /* myuninitialized.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = myuninitialized.h; path = mySTL/myuninitialized.h; sourceTree = "<group>"; };
+		08E5C1D11C74C120000F1A9D /* mylist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mylist.h; path = mySTL/mylist.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +85,7 @@
 			children = (
 				0885652B1C1E9F5C00E493B2 /* myRBtree.h */,
 				088CFEF71C169F6B0041354D /* myvector.h */,
+				08E5C1D11C74C120000F1A9D /* mylist.h */,
 			);
 			name = containers;
 			sourceTree = "<group>";

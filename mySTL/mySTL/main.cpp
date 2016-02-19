@@ -11,6 +11,7 @@
 #include <iostream>
 #include "myvector.h"
 #include "myRBtree.h"
+#include "mylist.h"
 using namespace std;
 int main(){
     //调试myalloc.h
@@ -83,7 +84,7 @@ int main(){
     cout<<endl;*/
 //---------------------------------------------------------------------------------------
     //test of myRBtree
-    myrb_tree<int, int, JJ::identity<int>, less<int>> itree;
+    /*myrb_tree<int, int, JJ::identity<int>, less<int>> itree;
     cout<<itree.size()<<endl;
     itree.insert_unique(10);
     itree.insert_unique(7);
@@ -94,11 +95,43 @@ int main(){
     itree.insert_unique(11);
     itree.insert_unique(13);
     itree.insert_unique(12);
-    cout<<itree.size()<<endl;
-    int a=0;
-    for (myrb_tree<int, int, JJ::identity<int>, less<int>>::iterator it=itree.begin(); a<9/*it!=itree.end()*/; it++,a++) {
-        cout<<*it<<" ";
+    cout<<itree.size()<<endl;*/
+    //int a=0;
+    //for (myrb_tree<int, int, JJ::identity<int>, less<int>>::iterator it=itree.begin(); a<9/*it!=itree.end()*/; it++,a++) {
+    //    cout<<*it<<" ";
+    //}
+    //cout<<endl;
+    
+//-----------------------------------------------------------------------------------------
+    //test of myList
+    mylist<int> ilist;
+    ilist.push_back(1);
+    ilist.push_back(2);
+    ilist.push_back(3);
+    mylist<int>::iterator it;
+    for (it=ilist.begin(); it!=ilist.end(); it++) {
+        //cout<<it.node->data<<endl;
+        cout<<*it<<endl;
     }
-    cout<<endl;
+    mylist<int>::iterator it2=ilist.find(1);
+    if(it2!=ilist.end()){
+        cout<<"find!!"<<endl;
+    }else
+        cout<<"not find!!"<<endl;
+    ilist.push_front(1);
+    ilist.pop_back();
+    for (it=ilist.begin(); it!=ilist.end(); it++) {
+        cout<<*it<<endl;
+    }
+    //ilist.clear();
+    //ilist.push_front(4);
+    for (it=ilist.begin(); it!=ilist.end(); it++) {
+        cout<<*it<<endl;
+    }
+    ilist.remove(1);
+    for (it=ilist.begin(); it!=ilist.end(); it++) {
+        cout<<"lala1"<<endl;
+        cout<<*it<<endl;
+    }
     return 0;
 }
