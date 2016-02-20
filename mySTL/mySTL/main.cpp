@@ -129,8 +129,31 @@ int main(){
         cout<<*it<<endl;
     }
     ilist.remove(1);
+    cout<<"lala1"<<endl;
     for (it=ilist.begin(); it!=ilist.end(); it++) {
-        cout<<"lala1"<<endl;
+        cout<<*it<<endl;
+    }
+    ilist.push_front(2);
+    ilist.push_back(2);
+    ilist.unique();
+    cout<<"lala2"<<endl;
+    for (it=ilist.begin(); it!=ilist.end(); it++) {
+        cout<<*it<<endl;
+    }
+    ilist.push_back(3);
+    ilist.push_back(4);
+    ilist.push_back(5);
+    ilist.push_back(6);
+    cout<<"lala3"<<endl;
+    for (it=ilist.begin(); it!=ilist.end(); it++) {
+        cout<<*it<<endl;
+    }
+    mylist<int>::iterator position=ilist.find(4);
+    mylist<int>::iterator first=ilist.find(5);
+    mylist<int>::iterator last=ilist.find(6);
+    ilist.transfer(position, first, last);
+    cout<<"lala4"<<endl;
+    for (it=ilist.begin(); it!=ilist.end(); it++) {
         cout<<*it<<endl;
     }
     return 0;

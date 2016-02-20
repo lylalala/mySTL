@@ -30,8 +30,8 @@
         list_iterator():node(NULL){};
         //list_iterator(iterator aIterator):
         
-        bool operator==(const iterator& x) const {return node==x.node;}
-        bool operator!=(const iterator& x) const {return node!=x.node;}
+        bool operator==(const iterator& x) const {return node->data==x.node->data;}
+        bool operator!=(const iterator& x) const {return node->data!=x.node->data;}
 //------------------------------------------------------------------------------
         iterator& operator++(){
             node=node->next;
@@ -136,6 +136,30 @@
                     it++;
             }
             return;
+        }
+        void unique(){
+            if (node->next==node) {
+                return;
+            }
+            iterator first=begin();
+            iterator second=first;
+            while (second!=end()) {
+                if (++second==first) {
+                    erase(second);
+                    second=first;
+                }else{
+                    first=second;
+                }
+            }
+        }
+        void transfer(iterator position,iterator first,iterator last){
+            iterator tmp=last.node->prev;
+            first.node->prev->next=last.node;
+            last.node->prev=first.node->prev;
+            position.node->prev->next=first.node;
+            first.node->prev=position.node->prev;
+            tmp.node->next=position.node;
+            position.node->prev=tmp.node;
         }
     protected:
         void empty_initialize(){
